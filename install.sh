@@ -1,0 +1,1 @@
+export FYNE_FONT=resource/ttf/SourceHanSerifCN-Regular.ttf

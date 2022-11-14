@@ -1,0 +1,16 @@
+.DS_Store
+*.pb.go
+*.pb.gw.go
+*_pb2_grpc.py
+*_pb2.py
+!vendor/**/*.pb.go
+!vendor/**/*.pb.gw.go
+.idea
+.vscode
+tags
+tags.lock
+tags.temp
+*.swp
+*.exe
+*.log
+*.pbtxt
