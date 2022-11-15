@@ -1,7 +1,8 @@
 ### 介绍：
-    [介绍直达](https://github.com/zsr228/onenote-reminder/wiki/onenote-reminder介绍)
-### 背景：
-	onenote reminder只能trial一个月,后面需要license
+[介绍直达](https://github.com/zsr228/onenote-reminder/wiki/onenote-reminder介绍)
+
+### 背景：   
+
 ### 目的：
 	加载onenote的提醒事项进行提醒
 ### 方法：
