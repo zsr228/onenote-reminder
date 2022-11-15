@@ -1,6 +1,7 @@
 package main
 
 import (
+	"daily/demo-project/onenote/common"
 	"daily/demo-project/onenote/service"
 	"encoding/xml"
 	"fmt"
@@ -8,7 +9,10 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/widget"
 	"github.com/grokify/html-strip-tags-go"
+	"github.com/urfave/cli/v2"
 	"io/ioutil"
+	"log"
+	"os"
 	"os/exec"
 	"strings"
 	"sync"
@@ -22,11 +26,37 @@ var (
 )
 
 func init() {
-	//err := os.Setenv("FYNE_FONT", fmt.Sprintf("%s", "resource/ttf/SourceHanSerifCN-Regular.ttf"))
-	//if nil != err {
-	//	panic(err)
-	//}
-	//fmt.Println(os.Getenv("FYNE_FONT"))
+	err := os.Setenv("FYNE_FONT", fmt.Sprintf("%s", "resource/ttf/SourceHanSerifCN-Regular.ttf"))
+	if nil != err {
+		panic(err)
+	}
+	fmt.Println(os.Getenv("FYNE_FONT"))
+
+	appCmd := &cli.App{
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:     "ms_crack_binary",
+				Value:    "D:\\go-workspace\\src\\onenote\\VanillaAddIn\\VanillaConsole\\bin\\Release\\VanillaConsole.exe",
+				Usage:    "microsoft crack binary path",
+				Required: true,
+			},
+			&cli.StringFlag{
+				Name:     "ms_crack_gen_mid_file",
+				Value:    "D:\\content.xml",
+				Usage:    "microsoft crack binary generate mid file path",
+				Required: true,
+			},
+		},
+	}
+	appCmd.Action = func(cCtx *cli.Context) error {
+		common.MSCrackBinary = cCtx.String("ms_crack_binary")
+		common.MSCrackGenMidFile = cCtx.String("ms_crack_gen_mid_file")
+		return nil
+	}
+
+	if err := appCmd.Run(os.Args); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func main() {
@@ -38,11 +68,11 @@ func main() {
 		defer ticker.Stop()
 
 		for {
-			exeName := "D:\\go-workspace\\src\\onenote\\VanillaAddIn\\VanillaConsole\\bin\\Release\\VanillaConsole.exe"
+			exeName := common.MSCrackBinary
 			invokeNoteExe(exeName)
 			fmt.Println(fmt.Sprintf("note is write at %s", time.Now().String()))
 
-			fileName := "D:/content.xml"
+			fileName := common.MSCrackGenMidFile
 			readXmlContent(fileName)
 			fmt.Println(fmt.Sprintf("note is read at %s", time.Now().String()))
 
